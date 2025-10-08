@@ -1,150 +1,117 @@
-<!doctype html>
+ql<!doctype html>
 <html lang="id">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ipungg Store — Script & Bot WhatsApp</title>
-  <meta name="description" content="Tempat beli script dan bot WhatsApp terbaik by Ipungg Store.">
+  <title>Ipungg Store — Admin Upload</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
   <style>
-    *{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',system-ui,sans-serif}
-    body{background:#f8fafc;color:#111;line-height:1.5}
-    a{color:inherit;text-decoration:none}
-    header{background:linear-gradient(90deg,#0f172a,#1e293b);color:#fff;padding:14px 16px;position:sticky;top:0;z-index:50}
-    .container{max-width:980px;margin:0 auto}
-    .nav{display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;align-items:center;gap:10px}
-    .logo{width:42px;height:42px;background:#ffffff22;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
-    .brand h1{font-size:17px}
-    .actions{display:flex;gap:10px;align-items:center}
-    .icon-btn{background:transparent;border:1px solid rgba(255,255,255,0.15);padding:8px 10px;border-radius:8px;color:#fff;cursor:pointer;transition:.2s}
-    .icon-btn:hover{background:rgba(255,255,255,0.1)}
-    main{padding:24px 16px}
-    .profile{display:flex;gap:16px;align-items:center;margin-bottom:18px}
-    .avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(180deg,#a5f3fc,#38bdf8);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#0f172a}
-    .meta{display:flex;flex-direction:column;gap:6px}
-    .handle{font-weight:700;font-size:18px}
-    .sub{color:#555;font-size:14px}
-    .links{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:12px}
-    .card{background:#fff;border-radius:12px;padding:12px;box-shadow:0 6px 18px rgba(15,23,42,0.06);display:flex;align-items:center;gap:12px;border:1px solid #f0f0f0;transition:.2s}
-    .card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(15,23,42,0.12)}
-    .thumb{width:56px;height:56px;border-radius:8px;background:#e0f2fe;display:flex;align-items:center;justify-content:center;font-weight:700;color:#0369a1}
-    .info{flex:1;display:flex;flex-direction:column;gap:4px}
-    .title{font-weight:700;font-size:15px}
-    .subtitle{font-size:13px;color:#666}
-    .cta{display:flex;gap:8px;align-items:center}
-    .btn{padding:8px 12px;border-radius:8px;border:0;cursor:pointer;font-weight:600;transition:.2s}
-    .btn.primary{background:#0f172a;color:#fff}
-    .btn.primary:hover{background:#1e293b}
-    .btn.ghost{background:transparent;border:1px solid #d1d5db}
-    .btn.ghost:hover{background:#f3f4f6}
-    footer{text-align:center;color:#666;font-size:13px;margin-top:20px;padding-bottom:40px}
-    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.45);display:none;align-items:center;justify-content:center;z-index:80}
-    .modal{background:#fff;width:92%;max-width:520px;border-radius:12px;padding:16px;box-shadow:0 20px 40px rgba(2,6,23,0.3)}
-    .close{background:transparent;border:0;font-size:18px;cursor:pointer}
+    body{font-family:'Inter',sans-serif;background:#f8fafc;color:#111;margin:0;padding:20px;text-align:center}
+    h1{color:#0f172a;margin-bottom:20px}
+    .upload-box{background:#fff;padding:20px;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,0.05);max-width:480px;margin:auto}
+    input[type=file]{margin-top:10px}
+    button{background:#0f172a;color:#fff;border:none;padding:10px 16px;border-radius:8px;margin-top:12px;cursor:pointer;font-weight:600}
+    button:hover{background:#1e293b}
+    .uploaded-item{background:#f1f5f9;padding:10px;border-radius:8px;margin-top:8px;font-size:14px}
+    .hidden{display:none}
   </style>
 </head>
 <body>
-  <header>
-    <div class="container nav">
-      <div class="brand">
-        <div class="logo">I</div>
-        <div><h1>@ipungg-storee</h1></div>
-      </div>
-      <div class="actions">
-        <button class="icon-btn" id="btn-cart">🛒 Cart (0)</button>
-        <button class="icon-btn" id="btn-report">⚠️ Report</button>
-      </div>
-    </div>
-  </header>
+  <h1>📤 Admin Panel — Upload File ke Ipungg Store</h1>
 
-  <main class="container">
-    <section class="profile">
-      <div class="avatar">I</div>
-      <div class="meta">
-        <div class="handle">@ipungg-storee</div>
-        <div class="sub">Jual script & bot WhatsApp • aman, murah, terpercaya 💙</div>
-      </div>
-    </section>
-
-    <section>
-      <div class="links" id="links">
-
-        <!-- Produk 1 -->
-        <article class="card">
-          <div class="thumb">Z</div>
-          <div class="info">
-            <div class="title">SCRIPT BOT ZENITSU-MD</div>
-            <div class="subtitle">Bot multi-device, update terbaru</div>
-          </div>
-          <div class="cta">
-            <button class="btn ghost" onclick="openLink('https://drive.google.com/')">Link</button>
-            <button class="btn primary" onclick="addToCart('SCRIPT BOT ZENITSU-MD')">Buy Now</button>
-          </div>
-        </article>
-
-        <!-- Produk 2 -->
-        <article class="card">
-          <div class="thumb">K</div>
-          <div class="info">
-            <div class="title">SCRIPT KENZ-MD</div>
-            <div class="subtitle">Bot ringan & cepat</div>
-          </div>
-          <div class="cta">
-            <button class="btn ghost" onclick="openLink('https://drive.google.com/')">Link</button>
-            <button class="btn primary" onclick="addToCart('SCRIPT KENZ-MD')">Buy Now</button>
-          </div>
-        </article>
-
-        <!-- Produk 3 -->
-        <article class="card">
-          <div class="thumb">P</div>
-          <div class="info">
-            <div class="title">SCRIPT PANEL AUTO</div>
-            <div class="subtitle">Auto create panel hosting</div>
-          </div>
-          <div class="cta">
-            <button class="btn ghost" onclick="openLink('https://drive.google.com/')">Link</button>
-            <button class="btn primary" onclick="addToCart('SCRIPT PANEL AUTO')">Buy Now</button>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-    <footer>© 2025 Ipungg Store — dibuat dengan ❤️ by SaefulGG</footer>
-  </main>
-
-  <div class="modal-backdrop" id="cart-modal">
-    <div class="modal">
-      <header><h3>Cart (<span id="cart-count">0</span>)</h3><button class="close" onclick="closeModal('cart-modal')">&times;</button></header>
-      <div id="cart-items"><em>Cart kosong</em></div>
-    </div>
+  <!-- Login form -->
+  <div id="loginBox" class="upload-box">
+    <h3>Login Admin</h3>
+    <input type="email" id="email" placeholder="Email admin"><br>
+    <input type="password" id="password" placeholder="Password"><br>
+    <button onclick="login()">Login</button>
+    <p id="loginStatus" style="color:red;margin-top:8px;"></p>
   </div>
 
-  <div class="modal-backdrop" id="report-modal">
-    <div class="modal">
-      <header><h3>Report / Laporkan</h3><button class="close" onclick="closeModal('report-modal')">&times;</button></header>
-      <div>
-        <label><div>Apa yang ingin Anda laporkan?</div>
-          <select id="report-type" style="width:100%;padding:8px;margin-top:8px">
-            <option>Spam</option><option>Pelecehan</option><option>Bug / Error</option>
-          </select>
-        </label>
-        <textarea id="report-desc" rows="4" style="width:100%;margin-top:8px;padding:8px"></textarea>
-        <button class="btn primary" onclick="sendReport()" style="margin-top:8px">Kirim</button>
-      </div>
-    </div>
+  <!-- Upload box -->
+  <div id="uploadBox" class="upload-box hidden">
+    <h3>Upload File</h3>
+    <input type="file" id="fileInput" multiple /><br />
+    <button onclick="uploadFiles()">Upload ke Server</button>
+    <button onclick="logout()" style="background:#b91c1c;margin-left:8px;">Logout</button>
+    <div id="progress"></div>
+    <div id="uploadedList"></div>
   </div>
 
   <script>
-    const cart=[]
-    function addToCart(n){cart.push(n);updateCartUI();openModal('cart-modal')}
-    function updateCartUI(){document.getElementById('cart-count').textContent=cart.length;document.getElementById('cart-items').innerHTML=cart.length?cart.map((c,i)=>`<div>${c} <button onclick="removeFromCart(${i})">x</button></div>`).join(''):'<em>Cart kosong</em>'}
-    function removeFromCart(i){cart.splice(i,1);updateCartUI()}
-    function openModal(id){document.getElementById(id).style.display='flex'}
-    function closeModal(id){document.getElementById(id).style.display='none'}
-    function sendReport(){alert('Laporan terkirim (demo)');closeModal('report-modal')}
-    function openLink(u){window.open(u,'_blank')}
+    // 🔧 Ganti konfigurasi Firebase kamu di sini
+    const firebaseConfig = {
+apiKey: "AIzaSyDAI6HGzq6RghqJjyR_uyYCNIYmyco...",
+authDomain: "ipungg-storee.firebaseapp.com",
+projectId: "ipungg-storee",
+storageBucket: "ipungg-storee.appspot.com",
+messagingSenderId: "577032533071",
+appId: "1:577032533071:web:4f5506bc9afc055342xxxx",
+measurementId: "G-TPPH0XWN2P"
+};
+
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const storage = firebase.storage();
+
+    const loginBox = document.getElementById('loginBox');
+    const uploadBox = document.getElementById('uploadBox');
+    const loginStatus = document.getElementById('loginStatus');
+
+    // Login function
+    function login(){
+      const email = document.getElementById('email').value;
+      const pass = document.getElementById('password').value;
+      auth.signInWithEmailAndPassword(email, pass)
+        .then(()=>{loginBox.classList.add('hidden');uploadBox.classList.remove('hidden');})
+        .catch(err=>{loginStatus.textContent = 'Login gagal: ' + err.message;});
+    }
+
+    // Logout
+    function logout(){
+      auth.signOut().then(()=>{
+        uploadBox.classList.add('hidden');
+        loginBox.classList.remove('hidden');
+      });
+    }
+
+    // Upload files
+    async function uploadFiles(){
+      const files = document.getElementById('fileInput').files;
+      const uploadedList = document.getElementById('uploadedList');
+      const progress = document.getElementById('progress');
+      uploadedList.innerHTML = '';
+      if(!files.length){alert('Pilih file dulu!');return;}
+
+      for(let file of files){
+        const ref = storage.ref('uploads/' + file.name);
+        const task = ref.put(file);
+        progress.innerHTML = `⏳ Mengunggah ${file.name}...`;
+
+        await new Promise((resolve, reject)=>{
+          task.on('state_changed', null, reject, async ()=>{
+            const url = await ref.getDownloadURL();
+            uploadedList.innerHTML += `<div class="uploaded-item">✅ ${file.name} — <a href="${url}" target="_blank">Lihat File</a></div>`;
+            resolve();
+          });
+        });
+      }
+      progress.innerHTML = `<span style="color:green">✅ Semua file berhasil diunggah!</span>`;
+    }
+
+    // Auto check login
+    auth.onAuthStateChanged(user=>{
+      if(user){
+        loginBox.classList.add('hidden');
+        uploadBox.classList.remove('hidden');
+      }else{
+        uploadBox.classList.add('hidden');
+        loginBox.classList.remove('hidden');
+      }
+    });
   </script>
 </body>
-  </html>
+</html>
