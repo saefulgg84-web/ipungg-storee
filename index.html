@@ -1,57 +1,112 @@
-ql<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ipungg Store — Admin Upload</title>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ipungg Store — Upload Panel</title>
   <style>
-    body{font-family:'Inter',sans-serif;background:#f8fafc;color:#111;margin:0;padding:20px;text-align:center}
-    h1{color:#0f172a;margin-bottom:20px}
-    .upload-box{background:#fff;padding:20px;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,0.05);max-width:480px;margin:auto}
-    input[type=file]{margin-top:10px}
-    button{background:#0f172a;color:#fff;border:none;padding:10px 16px;border-radius:8px;margin-top:12px;cursor:pointer;font-weight:600}
-    button:hover{background:#1e293b}
-    .uploaded-item{background:#f1f5f9;padding:10px;border-radius:8px;margin-top:8px;font-size:14px}
-    .hidden{display:none}
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background: #111;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 { text-align: center; }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    button {
+      background: #111;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #333;
+    }
+    .hidden { display: none; }
+    .file-item {
+      background: #f9f9f9;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      border: 1px solid #ddd;
+    }
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .logout-btn {
+      background: #c0392b;
+    }
   </style>
 </head>
 <body>
-  <h1>📤 Admin Panel — Upload File ke Ipungg Store</h1>
+  <header>📤 Ipungg Store — Admin Panel</header>
 
-  <!-- Login form -->
-  <div id="loginBox" class="upload-box">
-    <h3>Login Admin</h3>
-    <input type="email" id="email" placeholder="Email admin"><br>
-    <input type="password" id="password" placeholder="Password"><br>
-    <button onclick="login()">Login</button>
-    <p id="loginStatus" style="color:red;margin-top:8px;"></p>
+  <div class="container" id="loginBox">
+    <h2>Login Admin</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button id="loginBtn">Login</button>
+    <p id="loginError" style="color:red;"></p>
   </div>
 
-  <!-- Upload box -->
-  <div id="uploadBox" class="upload-box hidden">
-    <h3>Upload File</h3>
-    <input type="file" id="fileInput" multiple /><br />
-    <button onclick="uploadFiles()">Upload ke Server</button>
-    <button onclick="logout()" style="background:#b91c1c;margin-left:8px;">Logout</button>
-    <div id="progress"></div>
+  <div class="container hidden" id="uploadBox">
+    <h2>Upload File</h2>
+    <input type="file" id="fileInput" multiple>
+    <button id="uploadBtn">Upload</button>
+    <button class="logout-btn" id="logoutBtn">Logout</button>
+    <p id="progress"></p>
     <div id="uploadedList"></div>
   </div>
 
-  <script>
-    // 🔧 Ganti konfigurasi Firebase kamu di sini
-    const firebaseConfig = {
-apiKey: "AIzaSyDAI6HGzq6RghqJjyR_uyYCNIYmyco...",
-authDomain: "ipungg-storee.firebaseapp.com",
-projectId: "ipungg-storee",
-storageBucket: "ipungg-storee.appspot.com",
-messagingSenderId: "577032533071",
-appId: "1:577032533071:web:4f5506bc9afc055342xxxx",
-measurementId: "G-TPPH0XWN2P"
-};
+  <div class="container" id="publicBox">
+    <h2>Daftar File Publik</h2>
+    <div id="publicList">Memuat...</div>
+  </div>
 
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-storage-compat.js"></script>
+
+  <script>
+    // === Konfigurasi Firebase Project Kamu ===
+    const firebaseConfig = {
+      apiKey: "AIzaSyDAl6HGzq6RghqJjyR_uyYCNIYmycc8Pe8",
+      authDomain: "ipungg-storee.firebaseapp.com",
+      projectId: "ipungg-storee",
+      storageBucket: "ipungg-storee.firebasestorage.app",
+      messagingSenderId: "577032533071",
+      appId: "1:577032533071:web:4f5506bc9afc055344e63a",
+      measurementId: "G-TPPH0XWN2P"
+    };
 
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
@@ -59,59 +114,94 @@ measurementId: "G-TPPH0XWN2P"
 
     const loginBox = document.getElementById('loginBox');
     const uploadBox = document.getElementById('uploadBox');
-    const loginStatus = document.getElementById('loginStatus');
+    const publicBox = document.getElementById('publicBox');
 
-    // Login function
-    function login(){
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const uploadBtn = document.getElementById('uploadBtn');
+
+    // === LOGIN ===
+    loginBtn.addEventListener('click', async () => {
       const email = document.getElementById('email').value;
-      const pass = document.getElementById('password').value;
-      auth.signInWithEmailAndPassword(email, pass)
-        .then(()=>{loginBox.classList.add('hidden');uploadBox.classList.remove('hidden');})
-        .catch(err=>{loginStatus.textContent = 'Login gagal: ' + err.message;});
-    }
-
-    // Logout
-    function logout(){
-      auth.signOut().then(()=>{
-        uploadBox.classList.add('hidden');
-        loginBox.classList.remove('hidden');
-      });
-    }
-
-    // Upload files
-    async function uploadFiles(){
-      const files = document.getElementById('fileInput').files;
-      const uploadedList = document.getElementById('uploadedList');
-      const progress = document.getElementById('progress');
-      uploadedList.innerHTML = '';
-      if(!files.length){alert('Pilih file dulu!');return;}
-
-      for(let file of files){
-        const ref = storage.ref('uploads/' + file.name);
-        const task = ref.put(file);
-        progress.innerHTML = `⏳ Mengunggah ${file.name}...`;
-
-        await new Promise((resolve, reject)=>{
-          task.on('state_changed', null, reject, async ()=>{
-            const url = await ref.getDownloadURL();
-            uploadedList.innerHTML += `<div class="uploaded-item">✅ ${file.name} — <a href="${url}" target="_blank">Lihat File</a></div>`;
-            resolve();
-          });
-        });
+      const password = document.getElementById('password').value;
+      try {
+        await auth.signInWithEmailAndPassword(email, password);
+      } catch (e) {
+        document.getElementById('loginError').textContent = e.message;
       }
-      progress.innerHTML = `<span style="color:green">✅ Semua file berhasil diunggah!</span>`;
-    }
+    });
 
-    // Auto check login
-    auth.onAuthStateChanged(user=>{
-      if(user){
+    // === LOGOUT ===
+    logoutBtn.addEventListener('click', () => auth.signOut());
+
+    // === STATUS LOGIN ===
+    auth.onAuthStateChanged(user => {
+      if (user) {
         loginBox.classList.add('hidden');
         uploadBox.classList.remove('hidden');
-      }else{
+      } else {
         uploadBox.classList.add('hidden');
         loginBox.classList.remove('hidden');
       }
     });
+
+    // === UPLOAD FILE ===
+    uploadBtn.addEventListener('click', async () => {
+      const user = auth.currentUser;
+      if (!user) {
+        alert('Silakan login sebagai admin terlebih dahulu.');
+        return;
+      }
+
+      const files = document.getElementById('fileInput').files;
+      if (!files.length) {
+        alert('Pilih file dulu!');
+        return;
+      }
+
+      const progress = document.getElementById('progress');
+      const uploadedList = document.getElementById('uploadedList');
+      progress.textContent = '';
+      uploadedList.innerHTML = '';
+
+      for (let file of files) {
+        const path = `uploads/${Date.now()}_${file.name}`;
+        const ref = storage.ref(path);
+        const task = ref.put(file);
+
+        task.on('state_changed', snapshot => {
+          const percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          progress.textContent = `Mengunggah ${file.name} (${percent.toFixed(0)}%)`;
+        }, err => {
+          alert('Gagal upload: ' + err.message);
+        }, async () => {
+          const url = await ref.getDownloadURL();
+          uploadedList.innerHTML += `<div class="file-item">✅ ${file.name} — <a href="${url}" target="_blank">Lihat File</a></div>`;
+          progress.textContent = 'Upload selesai!';
+          loadPublicFiles(); // update daftar publik
+        });
+      }
+    });
+
+    // === TAMPILKAN FILE PUBLIK ===
+    async function loadPublicFiles() {
+      const publicList = document.getElementById('publicList');
+      publicList.innerHTML = 'Memuat daftar file...';
+      try {
+        const listRef = storage.ref('uploads');
+        const res = await listRef.listAll();
+        let html = '';
+        for (let item of res.items) {
+          const url = await item.getDownloadURL();
+          const name = item.name.replace(/^\d+_/, '');
+          html += `<div class="file-item">📄 ${name} — <a href="${url}" target="_blank">Download</a></div>`;
+        }
+        publicList.innerHTML = html || 'Belum ada file yang diupload.';
+      } catch (e) {
+        publicList.innerHTML = 'Gagal memuat daftar file.';
+      }
+    }
+    loadPublicFiles();
   </script>
 </body>
-</html>
+      </html>
