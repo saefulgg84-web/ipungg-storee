@@ -3,35 +3,40 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Scriptnya — contoh seperti lynk.id/page/aks1w</title>
+  <title>Ipungg Store — Script & Bot WhatsApp</title>
+  <meta name="description" content="Tempat beli script dan bot WhatsApp terbaik by Ipungg Store.">
   <style>
-    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,sans-serif}
-    body{background:#fafafa;color:#111;line-height:1.4}
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',system-ui,sans-serif}
+    body{background:#f8fafc;color:#111;line-height:1.5}
     a{color:inherit;text-decoration:none}
-    header{background:linear-gradient(90deg,#0f172a,#0b1220);color:#fff;padding:14px 16px;position:sticky;top:0;z-index:50}
+    header{background:linear-gradient(90deg,#0f172a,#1e293b);color:#fff;padding:14px 16px;position:sticky;top:0;z-index:50}
     .container{max-width:980px;margin:0 auto}
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .nav{display:flex;align-items:center;justify-content:space-between}
     .brand{display:flex;align-items:center;gap:10px}
-    .logo{width:40px;height:40px;background:#fff2;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
-    .brand h1{font-size:16px}
+    .logo{width:42px;height:42px;background:#ffffff22;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
+    .brand h1{font-size:17px}
     .actions{display:flex;gap:10px;align-items:center}
-    .icon-btn{background:transparent;border:1px solid rgba(255,255,255,0.08);padding:8px 10px;border-radius:8px;color:#fff;cursor:pointer}
+    .icon-btn{background:transparent;border:1px solid rgba(255,255,255,0.15);padding:8px 10px;border-radius:8px;color:#fff;cursor:pointer;transition:.2s}
+    .icon-btn:hover{background:rgba(255,255,255,0.1)}
     main{padding:24px 16px}
     .profile{display:flex;gap:16px;align-items:center;margin-bottom:18px}
-    .avatar{width:72px;height:72px;border-radius:12px;background:linear-gradient(180deg,#ffd6a5,#ffb4a2);display:flex;align-items:center;justify-content:center;font-size:28px;color:#111}
+    .avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(180deg,#a5f3fc,#38bdf8);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#0f172a}
     .meta{display:flex;flex-direction:column;gap:6px}
-    .handle{font-weight:700}
-    .sub{color:#556;font-size:13px}
-    .links{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
-    .card{background:#fff;border-radius:12px;padding:12px;box-shadow:0 6px 18px rgba(15,23,42,0.06);display:flex;align-items:center;gap:12px;border:1px solid #f0f0f0}
-    .thumb{width:56px;height:56px;border-radius:8px;background:#eef;display:flex;align-items:center;justify-content:center;font-weight:700;color:#0f172a}
+    .handle{font-weight:700;font-size:18px}
+    .sub{color:#555;font-size:14px}
+    .links{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:12px}
+    .card{background:#fff;border-radius:12px;padding:12px;box-shadow:0 6px 18px rgba(15,23,42,0.06);display:flex;align-items:center;gap:12px;border:1px solid #f0f0f0;transition:.2s}
+    .card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(15,23,42,0.12)}
+    .thumb{width:56px;height:56px;border-radius:8px;background:#e0f2fe;display:flex;align-items:center;justify-content:center;font-weight:700;color:#0369a1}
     .info{flex:1;display:flex;flex-direction:column;gap:4px}
     .title{font-weight:700;font-size:15px}
     .subtitle{font-size:13px;color:#666}
-    .cta{margin-left:auto;display:flex;gap:8px;align-items:center}
-    .btn{padding:8px 12px;border-radius:8px;border:0;cursor:pointer;font-weight:600}
+    .cta{display:flex;gap:8px;align-items:center}
+    .btn{padding:8px 12px;border-radius:8px;border:0;cursor:pointer;font-weight:600;transition:.2s}
     .btn.primary{background:#0f172a;color:#fff}
-    .btn.ghost{background:transparent;border:1px solid #e6e6e6}
+    .btn.primary:hover{background:#1e293b}
+    .btn.ghost{background:transparent;border:1px solid #d1d5db}
+    .btn.ghost:hover{background:#f3f4f6}
     footer{text-align:center;color:#666;font-size:13px;margin-top:20px;padding-bottom:40px}
     .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.45);display:none;align-items:center;justify-content:center;z-index:80}
     .modal{background:#fff;width:92%;max-width:520px;border-radius:12px;padding:16px;box-shadow:0 20px 40px rgba(2,6,23,0.3)}
@@ -41,34 +46,72 @@
 <body>
   <header>
     <div class="container nav">
-      <div class="brand"><div class="logo">S</div><div><h1>@scriptnya</h1></div></div>
+      <div class="brand">
+        <div class="logo">I</div>
+        <div><h1>@ipungg-storee</h1></div>
+      </div>
       <div class="actions">
-        <button class="icon-btn" id="btn-cart">Cart (0)</button>
-        <button class="icon-btn" id="btn-report">Report</button>
+        <button class="icon-btn" id="btn-cart">🛒 Cart (0)</button>
+        <button class="icon-btn" id="btn-report">⚠️ Report</button>
       </div>
     </div>
   </header>
 
   <main class="container">
     <section class="profile">
-      <div class="avatar">S</div>
+      <div class="avatar">I</div>
       <div class="meta">
-        <div class="handle">@scriptnya</div>
-        <div class="sub">Kumpulan script & bot — made with 💙</div>
+        <div class="handle">@ipungg-storee</div>
+        <div class="sub">Jual script & bot WhatsApp • aman, murah, terpercaya 💙</div>
       </div>
     </section>
 
     <section>
       <div class="links" id="links">
+
+        <!-- Produk 1 -->
         <article class="card">
           <div class="thumb">Z</div>
-          <div class="info"><div class="title">SCRIPT BOT ZENITSU-MD</div><div class="subtitle">Unduh / lihat detail</div></div>
-          <div class="cta"><button class="btn ghost" onclick="openLink('#')">Link</button><button class="btn primary" onclick="addToCart('SCRIPT BOT ZENITSU-MD')">Buy Now</button></div>
+          <div class="info">
+            <div class="title">SCRIPT BOT ZENITSU-MD</div>
+            <div class="subtitle">Bot multi-device, update terbaru</div>
+          </div>
+          <div class="cta">
+            <button class="btn ghost" onclick="openLink('https://drive.google.com/')">Link</button>
+            <button class="btn primary" onclick="addToCart('SCRIPT BOT ZENITSU-MD')">Buy Now</button>
+          </div>
         </article>
+
+        <!-- Produk 2 -->
+        <article class="card">
+          <div class="thumb">K</div>
+          <div class="info">
+            <div class="title">SCRIPT KENZ-MD</div>
+            <div class="subtitle">Bot ringan & cepat</div>
+          </div>
+          <div class="cta">
+            <button class="btn ghost" onclick="openLink('https://drive.google.com/')">Link</button>
+            <button class="btn primary" onclick="addToCart('SCRIPT KENZ-MD')">Buy Now</button>
+          </div>
+        </article>
+
+        <!-- Produk 3 -->
+        <article class="card">
+          <div class="thumb">P</div>
+          <div class="info">
+            <div class="title">SCRIPT PANEL AUTO</div>
+            <div class="subtitle">Auto create panel hosting</div>
+          </div>
+          <div class="cta">
+            <button class="btn ghost" onclick="openLink('https://drive.google.com/')">Link</button>
+            <button class="btn primary" onclick="addToCart('SCRIPT PANEL AUTO')">Buy Now</button>
+          </div>
+        </article>
+
       </div>
     </section>
 
-    <footer>dibuat dengan ❤️ — contoh template mirip lynk.id/scriptnya/page/aks1w</footer>
+    <footer>© 2025 Ipungg Store — dibuat dengan ❤️ by SaefulGG</footer>
   </main>
 
   <div class="modal-backdrop" id="cart-modal">
@@ -82,7 +125,11 @@
     <div class="modal">
       <header><h3>Report / Laporkan</h3><button class="close" onclick="closeModal('report-modal')">&times;</button></header>
       <div>
-        <label><div>Apa yang ingin Anda laporkan?</div><select id="report-type" style="width:100%;padding:8px"><option>Spam</option><option>Pelecehan</option></select></label>
+        <label><div>Apa yang ingin Anda laporkan?</div>
+          <select id="report-type" style="width:100%;padding:8px;margin-top:8px">
+            <option>Spam</option><option>Pelecehan</option><option>Bug / Error</option>
+          </select>
+        </label>
         <textarea id="report-desc" rows="4" style="width:100%;margin-top:8px;padding:8px"></textarea>
         <button class="btn primary" onclick="sendReport()" style="margin-top:8px">Kirim</button>
       </div>
@@ -100,4 +147,4 @@
     function openLink(u){window.open(u,'_blank')}
   </script>
 </body>
-</html>
+  </html>
